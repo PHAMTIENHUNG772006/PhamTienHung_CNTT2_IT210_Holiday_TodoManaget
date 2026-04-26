@@ -24,11 +24,12 @@
 
     <div id="todoForm"
          class="card p-3 mb-4"
-         th:style="${hasError} ? 'display:block' : 'display:none'">
-        <h5>Thêm công việc</h5>
+         th:style="${hasError} or ${showForm} ? 'display:block' : 'display:none'">
+        <h5 th:text="${todo.id} != null ? 'Cập nhật công việc' : 'Thêm công việc'"></h5>
 
         <form th:action="@{/add}" method="post" th:object="${todo}">
 
+            <input type="hidden" th:field="*{id}" />
             <div class="form-group">
                 <label>Nội dung</label>
                 <input type="text" class="form-control" th:field="*{content}">
@@ -64,6 +65,7 @@
         </form>
     </div>
 
+
     <table class="table table-bordered table-striped table-hover text-center">
         <thead>
         <tr>
@@ -72,6 +74,7 @@
             <th>Hạn</th>
             <th>Trạng thái</th>
             <th>Ưu tiên</th>
+            <th>Hành động</th>
         </tr>
         </thead>
 
@@ -80,7 +83,6 @@
             <td th:text="${t.id}"></td>
             <td th:text="${t.content}"></td>
             <td th:text="${t.dueDate}"></td>
-
             <td>
                 <span class="badge"
                       th:classappend="${t.status == 'DONE'} ? 'badge-success' : 'badge-warning'"
@@ -95,6 +97,11 @@
                         (${t.priority == 'MEDIUM'} ? 'badge-info' : 'badge-secondary')"
                       th:text="${t.priority}">
                 </span>
+            </td>
+            <td>
+                <a th:href="@{/edit/{id}(id=${t.id})}">Sửa</a>
+                <a th:href="@{/delete/{id}(id=${t.id})}"
+                   onclick="return confirm('Bạn có chắc muốn xóa task này?');">Xóa</a>
             </td>
         </tr>
         </tbody>
