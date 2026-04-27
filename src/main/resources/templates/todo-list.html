@@ -14,12 +14,17 @@
 
 <div class="container mt-5">
 
-    <h2 class="text-center mb-4">Todo Manager</h2>
+    <h2 class="text-center mb-4" th:text="#{name_web}"></h2>
 
-    <div class="text-right mb-3">
-        <button class="btn btn-primary" onclick="toggleForm()">
-            ➕ Thêm công việc
+    <div class="text-right mb-3 flex justify-content-between">
+        <button class="btn btn-primary" onclick="toggleForm()" th:text="#{button_add}">
+            ➕
         </button>
+        
+        <div>
+            <a th:href="@{/todo(lang='en')}">english</a> &nbsp; | &nbsp;
+            <a th:href="@{/todo(lang='vi')}">vietnamese</a>
+        </div>
     </div>
 
     <div id="todoForm"
@@ -67,6 +72,10 @@
 
 
     <table class="table table-bordered table-striped table-hover text-center">
+        <h3>
+            <span th:text="#{hello}">,</span>,
+            <span th:text="${name}"></span>
+        </h3>
         <thead>
         <tr>
             <th>ID</th>
